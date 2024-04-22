@@ -10,14 +10,13 @@ impl Fzf {
         Fzf {}
     }
 
-    pub fn start(&mut self, path: &str, tooldir: &str) -> Result<String> {
+    pub fn start(&mut self, toolpath: &str) -> Result<String> {
         let output = Command::new("sh")
             .arg("-c")
             .arg(
-                format!("tac {} | bash {}/bash/global.sh | fzf --listen {} --ansi --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
-                        path,
-                        tooldir,
+                format!("unbuffer git status -s | fzf --listen {} --multi --ansi --reverse --preview 'bash {}/bash/preview.sh {{2..}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2..}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
                         env::var("FZF_PORT").unwrap(),
+                        toolpath,
                         env::var("SERVER_PORT").unwrap())
             )
             .stderr(Stdio::inherit())

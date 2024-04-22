@@ -3,9 +3,9 @@ ZSH_COMMAND_GIT_FZF_BASE_DIR="${XDG_DATA_HOME-$HOME/.local/share}/zsh/d"
 ZSH_COMMAND_GIT_FZF_FILE="${ZSH_COMMAND_GIT_FZF_BASE_DIR}/.__d"
 
 function git-status() {
-    out=$(git status -s | fzf --multi --reverse | awk '{print $2}' | tr '\n' ' ')
+    out=$(${ZSH_COMMAND_GIT_FZF_TOOLDIR}/rust/git-fzf/target/release/git-fzf ${ZSH_COMMAND_GIT_FZF_TOOLDIR})
     if [[ -n $out ]]; then
-        BUFFER="$out"
+        BUFFER="$LBUFFER $out$RBUFFER"
         CURSOR="${#BUFFER}"
     fi
 }

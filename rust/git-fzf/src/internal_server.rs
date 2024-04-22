@@ -23,10 +23,15 @@ impl InternalServer {
                         .unwrap()
                         .parent()
                         .unwrap()
+                        .parent()
+                        .unwrap()
+                        .parent()
+                        .unwrap()
                         .join("python/server.py"),
                 )
                 .spawn()
                 .expect("failed to start server.py");
+            self.child = Some(_child);
         } else {
             println!("Server is already running.");
         }

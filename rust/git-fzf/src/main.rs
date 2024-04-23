@@ -18,6 +18,6 @@ fn main() {
 
     // fzfのプロセスを開始
     let mut fzf = Fzf::new();
-    let stdout = fzf.start(&args[1]);
+    let stdout = fzf.start(&args[1], &args[2]);
     print!("{}", stdout.unwrap_or_else(|_err| String::from("")))
 }

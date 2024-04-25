@@ -18,7 +18,7 @@ impl Fzf {
                         toolpath,
                         env::var("SERVER_PORT").unwrap());
         } else if func == "log" {
-            cmd = format!("unbuffer git log --oneline --graph | tr -d '\r' | fzf --listen {} --multi --ansi --reverse --preview 'bash {}/bash/preview.sh log {{+2}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
+            cmd = format!("git log --color=always --oneline --graph | tr -d '\r' | fzf --listen {} --multi --ansi --reverse --preview 'bash {}/bash/preview.sh log {{+2}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
                         env::var("FZF_PORT").unwrap(),
                         toolpath,
                         env::var("SERVER_PORT").unwrap());

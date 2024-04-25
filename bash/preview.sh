@@ -2,14 +2,14 @@
 set -euo pipefail
 
 function git_status() {
-    unbuffer git diff "$1" | tr -d '\r'
+    GIT_EXTERNAL_DIFF='difft --color=always' git diff "$1"
 }
 
 function git_log() {
     if [[ "$#" -eq 1 ]]; then
-        unbuffer git log -n 1 $1 | tr -d '\r'
+        git log --color=always -n 1 $1
     elif [[ "$#" -eq 2 ]]; then
-        unbuffer git diff "$1" "$2" | tr -d '\r'
+        GIT_EXTERNAL_DIFF='difft --color=always' git diff "$1" "$2"
     fi
 }
 

@@ -19,3 +19,21 @@ function git-log() {
     fi
 }
 zle -N git-log
+
+function git-branch() {
+    out=$(${ZSH_COMMAND_GIT_FZF_TOOLDIR}/rust/git-fzf/target/release/git-fzf branch ${ZSH_COMMAND_GIT_FZF_TOOLDIR})
+    if [[ -n $out ]]; then
+        if [[ -n "$WIDGET" ]]; then
+            BUFFER="$LBUFFER $out $RBUFFER"
+            CURSOR="${#BUFFER}"
+        else
+            git switch "$out"
+        fi
+    fi
+}
+zle -N git-branch
+
+function gb() {
+    git-branch
+}
+

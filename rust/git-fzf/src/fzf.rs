@@ -22,6 +22,9 @@ impl Fzf {
                         env::var("FZF_PORT").unwrap(),
                         toolpath,
                         env::var("SERVER_PORT").unwrap());
+        } else if func == "branch" {
+            cmd = format!("git branch -av --color=always | sed 's/^*\\? \\+//' | fzf --listen {} --multi --ansi --reverse --bind 'enter:become:echo {{+1}}'",
+                        env::var("FZF_PORT").unwrap())
         }
         let output = Command::new("sh")
             .arg("-c")

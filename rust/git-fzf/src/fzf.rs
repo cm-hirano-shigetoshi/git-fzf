@@ -13,7 +13,7 @@ impl Fzf {
     pub fn start(&mut self, func: &str, toolpath: &str) -> Result<String> {
         let mut cmd = ":".to_string();
         if func == "status" {
-            cmd = format!("unbuffer git status -s | fzf --listen {} --multi --ansi --reverse --preview '{}/shell/preview_status.sh {{2..}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2..}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
+            cmd = format!("unbuffer git status -s | fzf --listen {} --multi --ansi --reverse --preview '{}/shell/preview_status.sh {{}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2..}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
                         env::var("FZF_PORT").unwrap(),
                         toolpath,
                         env::var("SERVER_PORT").unwrap());

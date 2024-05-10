@@ -27,7 +27,13 @@ function git-branch() {
             BUFFER="$LBUFFER $out $RBUFFER"
             CURSOR="${#BUFFER}"
         else
-            git switch "$out"
+            out=$(echo "$out" | awk '{print $1}')
+            if echo "$out" | grep -q '^remotes/'; then
+                local_branch=$(perl -pe 's|.*?/||; s|.*?/||;' <<< "$out")
+                git checkout -b "$local_branch" "$out"
+            else
+                git switch "$out"
+            fi
         fi
     fi
 }

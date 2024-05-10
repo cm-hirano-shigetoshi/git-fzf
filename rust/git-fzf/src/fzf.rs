@@ -18,10 +18,11 @@ impl Fzf {
                         toolpath,
                         env::var("SERVER_PORT").unwrap());
         } else if func == "log" {
-            cmd = format!("git log --color=always --oneline --graph | tr -d '\r' | fzf --listen {} --multi --ansi --reverse --preview 'bash {}/bash/preview.sh log {{+2}}' --preview-window 'up:70%' --bind 'enter:become:echo {{+2}}' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"'",
+            cmd = format!("git log --color=always --oneline --graph | fzf --listen {} --multi --ansi --reverse --preview 'bash {}/bash/preview.sh log {{+}}' --preview-window 'up:70%' --bind 'alt-j:execute-silent:curl \"http://localhost:{}?bind=alt-j\"' | bash {}/bash/get_hash.sh | tr '\n' ' '",
                         env::var("FZF_PORT").unwrap(),
                         toolpath,
-                        env::var("SERVER_PORT").unwrap());
+                        env::var("SERVER_PORT").unwrap(),
+                        toolpath);
         } else if func == "branch" {
             cmd = format!("git branch -av --color=always | sed 's/^*\\? \\+//' | fzf --listen {} --multi --ansi --reverse --bind 'enter:become:echo {{+1}}'",
                         env::var("FZF_PORT").unwrap())

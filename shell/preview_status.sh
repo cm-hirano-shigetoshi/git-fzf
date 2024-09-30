@@ -37,6 +37,13 @@ elif [[ "$x" = "R" ]]; then
     filepath=$(echo "$filepath" | sed 's/^.* -> //')
     cat_file "$filepath"
 else
-    GIT_EXTERNAL_DIFF='difft --color=always' git diff "$filepath"
+    difft_output=$(GIT_EXTERNAL_DIFF='difft --color=always' git diff "$filepath")
+    if echo "$difft_output" | grep -q 'No syntactic changes\.$'; then
+        echo "[1m[32mNo syntactic changes.[0m"
+        echo ''
+        git diff --color=always "$filepath"
+    else
+        echo "$difft_output"
+    fi
 fi
 

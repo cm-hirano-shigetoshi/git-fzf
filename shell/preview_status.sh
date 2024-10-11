@@ -39,7 +39,15 @@ elif [[ "$x" = "R" ]]; then
 else
     difft_output=$(GIT_EXTERNAL_DIFF='difft --color=always' git diff "$filepath")
     if echo "$difft_output" | grep -q 'No syntactic changes\.$'; then
-        echo "[1m[32mNo syntactic changes.[0m"
+        echo "[1m[32m[DIFFT] No syntactic changes.[0m"
+        echo ''
+        git diff --color=always "$filepath"
+    elif echo "$difft_output" | grep -q 'exceeded DFT_PARSE_ERROR_LIMIT)$'; then
+        echo "[1m[32m[DIFFT] exceeded DFT_PARSE_ERROR_LIMIT.[0m"
+        echo ''
+        git diff --color=always "$filepath"
+    elif echo "$difft_output" | grep -q 'No changes\.$'; then
+        echo "[1m[32m[DIFFT] No changes.[0m"
         echo ''
         git diff --color=always "$filepath"
     else
